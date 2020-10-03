@@ -91,7 +91,11 @@
         :get-cell-classes="getDateClasses"
         :get-row-classes="getWeekState"
         @select="handleSelectDate"
-      ></table-date>
+      >
+        <template #date-cell="{cell}">
+          <slot :cell="cell" name="date-cell"></slot>
+        </template>
+      </table-date>
     </div>
   </div>
 </template>

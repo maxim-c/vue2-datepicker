@@ -23,7 +23,9 @@
           :class="getCellClasses(cell.day)"
           :title="getCellTitle(cell.day)"
         >
-          <div>{{ cell.text }}</div>
+          <slot name="date-cell" :cell="cell">
+            <div>{{ cell.text }}</div>
+          </slot>
         </td>
       </tr>
     </tbody>
@@ -105,19 +107,20 @@ export default {
         lastDayInLastMonth - ((calendar.getDay() + 7 - firstDayOfWeek) % 7);
       for (let i = firstDayInLastMonth; i <= lastDayInLastMonth; i++) {
         const day = i - lastDayInLastMonth;
-        arr.push({ day, text: i });
+        arr.push({ day, text: i, date: this.getCellTitle(day) });
       }
       // change to the last day of the current month
       calendar.setMonth(month + 1, 0);
       const lastDayInCurrentMonth = calendar.getDate();
       for (let i = 1; i <= lastDayInCurrentMonth; i++) {
-        arr.push({ day: i, text: i });
+        arr.push({ day: i, text: i, date: this.getCellTitle(i) });
       }
 
       const lastMonthLength = lastDayInLastMonth - firstDayInLastMonth + 1;
       const nextMonthLength = 6 * 7 - lastMonthLength - lastDayInCurrentMonth;
       for (let i = 1; i <= nextMonthLength; i++) {
-        arr.push({ day: lastDayInCurrentMonth + i, text: i });
+        const day = lastDayInCurrentMonth + i;
+        arr.push({ day, text: i, date: this.getCellTitle(day) });
       }
 
       return chunk(arr, 7);

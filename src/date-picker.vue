@@ -97,7 +97,9 @@
               ref="picker"
               v-bind="currentComponentProps"
               @select="handleSelectDate"
-            ></component>
+            >
+              <template #date-cell="{ cell }"><slot :cell="cell" name="date-cell"></slot></template>
+            </component>
           </slot>
         </div>
         <div v-if="hasSlot('footer') || confirm" :class="`${prefixClass}-datepicker-footer`">

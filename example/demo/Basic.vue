@@ -2,12 +2,12 @@
   <div class="box">
     <section>
       <p>date (default)</p>
-      <date-picker
-        v-model="value1"
-        format="YYYY-MM-DD"
-        type="date"
-        placeholder="Select date"
-      ></date-picker>
+      <date-picker v-model="value1" format="YYYY-MM-DD" type="date" placeholder="Select date">
+        <template v-slot:date-cell="{ cell }">
+          {{ cell.text }}
+          <span v-if="highlights[cell.date]">H</span>
+        </template>
+      </date-picker>
     </section>
     <section>
       <p>month</p>
@@ -15,7 +15,7 @@
     </section>
     <section>
       <p>year</p>
-      <date-picker v-model="value3" type="year" placeholder="Select year"></date-picker>
+      <date-picker v-model="value3" type="year" placeholder="Select year"> </date-picker>
     </section>
     <section>
       <p>datetime</p>
@@ -43,6 +43,10 @@ export default {
       value4: null,
       value5: null,
       value6: null,
+      highlights: {
+        '2020-10-04': { custom: 'hey' },
+        '2020-10-20': true,
+      },
     };
   },
 };
